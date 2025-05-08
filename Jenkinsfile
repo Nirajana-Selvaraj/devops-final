@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "yourusername/dockerized-html-app"
-        DOCKER_CREDENTIALS_ID = "dockerhub-credentials-id" // set this in Jenkins
+        DOCKER_IMAGE = "nirajana23/dockerized-html-app"
+        DOCKER_CREDENTIALS_ID = "dockerhub-credentials" // set this in Jenkins
     }
 
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/yourusername/dockerized-html-app.git'
+                git 'https://github.com/Nirajana-Selvaraj/devops-final.git'
             }
         }
 
