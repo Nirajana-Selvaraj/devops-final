@@ -3,20 +3,21 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "nirajana23/dockerized-html-app"
-        DOCKER_CREDENTIALS_ID = "dockerhub-credentials" // set this in Jenkins
+        DOCKER_CREDENTIALS_ID = "dockerhub-credentials"  // set this in Jenkins
     }
 
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/Nirajana-Selvaraj/devops-final.git'
+                // Make sure to checkout the correct branch (e.g., 'main')
+                git branch: 'main', url: 'https://github.com/Nirajana-Selvaraj/devops-final.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build(DOCKER_IMAGE)
+                    dockerImage = docker.build("${DOCKER_IMAGE}")
                 }
             }
         }
@@ -33,8 +34,10 @@ pipeline {
 
         stage('Deploy Container') {
             steps {
-                sh 'docker rm -f my-web || true'
-                sh "docker run -d --name my-web -p 8080:80 ${DOCKER_IMAGE}:latest"
+                script {
+                    sh 'docker rm -f my-web || true'
+                    sh "docker run -d --name my-web -p 8080:80 ${DOCKER_IMAGE}:latest"
+                }
             }
         }
     }
